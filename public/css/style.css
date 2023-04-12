@@ -1,0 +1,25 @@
+.container {
+    max-width: 960px;
+}
+
+.btn-tm{
+    background-color: #FF7920;
+    color: #FFFF;
+}
+
+.btn-tm:hover{
+    background-color: #FFBE00;
+    color: #FFFF;
+}
+
+/* estilos jose segura */
+
+.image-transition {
+    transition: opacity 0.5s ease-in-out;
+}
+
+.image-transition.next {
+    opacity: 0;
+}
+
+
