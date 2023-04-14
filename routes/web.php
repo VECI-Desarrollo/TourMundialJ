@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Cotizador;
+use App\Http\Livewire\PanelControl;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,7 @@ use App\Http\Livewire\Cotizador;
 // });
 
 Route::get('/', Cotizador::class)->name('cotizador');
+Route::get('panelControl/', PanelControl::class)->name('panelControl');
 
 Route::middleware([
     'auth:sanctum',

@@ -43,6 +43,16 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+   ////// se establece un directorio publico 2 para usarlo alguardar los archivos
+
+
+        'public2' => [
+            'driver' => 'local',
+            'root' => storage_path('.././public'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
 
         's3' => [
             'driver' => 's3',
