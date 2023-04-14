@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Cotizador;
 use App\Http\Livewire\PanelControl;
+use App\Http\Livewire\TiposDePago;
+use App\Http\Livewire\TiposDeProducto;
+use App\Http\Livewire\Vendedores;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +23,11 @@ use App\Http\Livewire\PanelControl;
 // });
 
 Route::get('/', Cotizador::class)->name('cotizador');
-Route::get('panelControl/', PanelControl::class)->name('panelControl');
+Route::get('panelControl/RegistroPagos', PanelControl::class)->name('RegistroPagos');
+Route::get('panelControl/Vendedores', Vendedores::class)->name('Vendedores');
+Route::get('panelControl/TiposDePago', TiposDePago::class)->name('TiposPago');
+Route::get('panelControl/TiposDeProductos', TiposDeProducto ::class)->name('TiposProducto');
+
 
 Route::middleware([
     'auth:sanctum',

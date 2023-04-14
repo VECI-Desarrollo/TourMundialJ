@@ -20,6 +20,9 @@ class AgregarTipoPagoModal extends Component
             ['tipoPago' => $this->tipoPago],
 
         );
+
+  // ////// emit para refrescar el panel tipos de pago  y actualizar datos en tiempo real
+  $this->emit('refreshPanelPagos');
       }
 
     public function render()

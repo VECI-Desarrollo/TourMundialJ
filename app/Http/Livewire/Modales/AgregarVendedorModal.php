@@ -37,9 +37,9 @@ class AgregarVendedorModal extends Component
 
         );
 
-        // ////// emit para refrescar el panel y actualizar datos en tiempo real
-        // $this->emit('refreshPanel');
-        $this->dispatchBrowserEvent('name-updated');
+        // ////// emit para refrescar el panel vendedores  y actualizar datos en tiempo real
+         $this->emit('refreshPanelVendedores');
+        // $this->dispatchBrowserEvent('name-updated');
 
      }
 

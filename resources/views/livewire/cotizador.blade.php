@@ -17,7 +17,7 @@
                 <button type="button"  class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#CuentasDeposito">
                   Ver cuentas deposito
                 </button>
-                <a href="{{ route('panelControl') }}" class="btn btn-primary">Panel de control</a>
+                <a href="{{ route('RegistroPagos') }}" class="btn btn-primary">Panel de control</a>
 
 
           </div>

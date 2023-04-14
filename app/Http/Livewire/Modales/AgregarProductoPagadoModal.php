@@ -18,6 +18,9 @@ class AgregarProductoPagadoModal extends Component
           ['tipoProducto' => $this->tipoProducto],
 
       );
+
+      // ////// emit para refrescar el panel tipos de pago  y actualizar datos en tiempo real
+  $this->emit('refreshPanelProductos');
     }
 
     public function render()
