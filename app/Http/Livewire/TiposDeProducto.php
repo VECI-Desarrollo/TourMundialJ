@@ -10,11 +10,24 @@ class TiposDeProducto extends Component
 {
 
     use WithPagination;
+    protected $paginationTheme = 'bootstrap'; //para dar e estilo numerico al paginador
 
     public $search = '';
     public $perPage = 5;
 
     protected $listeners = ['refreshPanelProductos' => '$refresh'];
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+        //// metodo para borrar
+        public function delete($id){
+            tiposproductos::where('id', $id)->delete();
+      // ////// emit para refrescar el panel vendedores  y actualizar datos en tiempo real
+        $this->emit('refreshPanelProductos');
+        }
 
     public function render()
     {

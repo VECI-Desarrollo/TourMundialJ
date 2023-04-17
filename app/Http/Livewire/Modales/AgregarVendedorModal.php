@@ -37,6 +37,13 @@ class AgregarVendedorModal extends Component
 
         );
 
+        //////// reset todos los campos del formulario
+        $this->reset(
+            [ 'nombre',
+            'apellido',
+            'email', ]);
+
+
         // ////// emit para refrescar el panel vendedores  y actualizar datos en tiempo real
          $this->emit('refreshPanelVendedores');
         // $this->dispatchBrowserEvent('name-updated');

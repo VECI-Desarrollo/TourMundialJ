@@ -12,6 +12,14 @@ class AgregarProductoPagadoModal extends Component
 
     public function save(){
 
+        $this->validate([
+            'tipoProducto' => 'required',
+
+        ], [
+            'tipoProducto.required' => 'Debes ingresar un tipo producto.',
+
+        ]);
+
        ////// se guarda  el tipo pago en la BD
 
        tiposproductos::updateOrCreate(

@@ -2,11 +2,11 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\tipospagos;
+use App\Models\correosadjuntos as ModelsCorreosadjuntos;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class TiposDePago extends Component
+class CorreosAdjuntos extends Component
 {
 
     use WithPagination;
@@ -15,31 +15,29 @@ class TiposDePago extends Component
     public $search = '';
     public $perPage = 3;
 
-    protected $listeners = ['refreshPanelPagos' => '$refresh'];
+    protected $listeners = ['refreshPanelCorreosAd' => '$refresh'];
 
     public function updatingSearch()
     {
         $this->resetPage();
     }
 
-    //// metodo para borrar
-
-    public function delete($id){
-        tipospagos::where('id', $id)->delete();
+     //// metodo para borrar
+     public function delete($id){
+        ModelsCorreosadjuntos::where('id', $id)->delete();
   // ////// emit para refrescar el panel vendedores  y actualizar datos en tiempo real
-    $this->emit('refreshPanelPagos');
+    $this->emit('refreshPanelCorreosAd');
     }
-
 
     public function render()
     {
-
-        $registros = tipospagos::where(function($query) {
-            $query->where('tipoPago', 'like', '%' . $this->search . '%');
+        $registros = ModelsCorreosadjuntos::where(function($query) {
+            $query->where('email', 'like', '%' . $this->search . '%');
         })
         ->orderBy('created_at', 'desc')
         ->paginate($this->perPage);
 
-        return view('livewire.tipos-de-pago',compact('registros'));
+
+        return view('livewire.correos-adjuntos',compact('registros'));
     }
 }

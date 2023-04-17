@@ -6,15 +6,15 @@
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link active" href="{{ route('RegistroPagos') }}">Active</a>
+      <a class="nav-link " href="{{ route('RegistroPagos') }}">Registro de pagos</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="{{ route('Vendedores') }}">Vendedores</a>
+      <a class="nav-link " href="{{ route('Vendedores') }}">Vendedores</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link"   href="{{ route('TiposPago') }}" >Tipos de Pago</a>
+      <a class="nav-link "   href="{{ route('TiposPago') }}" >Tipos de Pago</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link " href="{{ route('TiposProducto') }}">Tipos de producto</a>
+      <a class="nav-link  " href="{{ route('TiposProducto') }}">Tipos de producto</a>
     </li>
   </ul>

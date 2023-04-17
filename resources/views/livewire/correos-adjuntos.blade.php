@@ -8,7 +8,7 @@
                         <div class="col-sm-4">
                         </div>
                         <div class="col-sm-4">
-                            <h2 class="text-center">Tipos de <b>pagos</b></h2>
+                            <h2 class="text-center">Correos <b> adjuntos</b></h2>
                         </div>
                         <div class="col-sm-4">
                             <div class="search-box">
@@ -20,15 +20,23 @@
                         </div>
                     </div>
                 </div>
-                <button type="button"  class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#agregarTipoPagoModal">
-                    Agregar Tipo de pago
+                <button type="button"  class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#agregarCorreoAdjuntoModal">
+                    Agregar correo
                    </button>
                    @livewire('navigation-bar')
-
+                {{--  <button type="button"  class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#agregarVendedor">
+                    Agregar Vendedor
+                   </button>
+                   <button type="button"  class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#agregarTipoPagoModal">
+                    Agregar Tipo de pago
+                   </button>
+                   <button type="button"  class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#agregarProductoPagadoModal">
+                    Agregar producto
+                   </button>  --}}
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Tipo de pago</th>
+                            <th>Email</th>
                             <th>Acciones</th>
 
                         </tr>
@@ -36,8 +44,9 @@
                     <tbody>
                  @foreach ($registros as $registro)
               <tr>
-                <td>{{ $registro->tipoPago }}</td>
-                <td> <a href="#" class="delete"  wire:click="delete('{{$registro->id }}')" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a> </td>
+                <td>{{ $registro->email }}</td>
+                <td> <a href="#" class="delete"  wire:click="delete('{{$registro->id }}')" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td>
+
               </tr>
               @endforeach
                     </tbody>
@@ -53,7 +62,6 @@
             </div>
         </div>
     </div>
-
-    <livewire:modales.agregar-tipo-pago-modal/>
+<livewire:modales.agregar-correo-ad/>
 
 </div>

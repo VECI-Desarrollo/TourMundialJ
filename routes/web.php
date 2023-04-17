@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\CorreosAdjuntos;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Cotizador;
 use App\Http\Livewire\PanelControl;
@@ -23,10 +24,11 @@ use App\Http\Livewire\Vendedores;
 // });
 
 Route::get('/', Cotizador::class)->name('cotizador');
-Route::get('panelControl/RegistroPagos', PanelControl::class)->name('RegistroPagos');
-Route::get('panelControl/Vendedores', Vendedores::class)->name('Vendedores');
-Route::get('panelControl/TiposDePago', TiposDePago::class)->name('TiposPago');
-Route::get('panelControl/TiposDeProductos', TiposDeProducto ::class)->name('TiposProducto');
+Route::get('RegistroPagos', PanelControl::class)->name('RegistroPagos');
+Route::get('Vendedores', Vendedores::class)->name('Vendedores');
+Route::get('TiposDePago', TiposDePago::class)->name('TiposPago');
+Route::get('TiposDeProductos', TiposDeProducto ::class)->name('TiposProducto');
+Route::get('CorreosAdjuntos', CorreosAdjuntos::class)->name('CorreosAdjuntos');
 
 
 Route::middleware([

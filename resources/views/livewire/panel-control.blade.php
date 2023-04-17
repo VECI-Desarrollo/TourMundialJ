@@ -14,13 +14,14 @@
                             <div class="search-box">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
-                                    <input type="text" class="form-control" placeholder="Search&hellip;">
+                                    <input type="text" class="form-control" placeholder="Search&hellip;" wire:model="search">
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                 <x-navigation/>
+                @livewire('navigation-bar')
                 {{--  <button type="button"  class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#agregarVendedor">
                     Agregar Vendedor
                    </button>
@@ -34,6 +35,7 @@
                     <thead>
                         <tr>
                             <th>Agencia</th>
+                            <th>Vendedor</th>
                             <th>Expediente</th>
                             <th>Tipo de Pago</th>
                             <th>Monto</th>
@@ -48,6 +50,7 @@
                  @foreach ($registros as $registro)
               <tr>
                 <td>{{ $registro->agenciaNombre }}</td>
+                <td>{{ $registro->vendedor }}</td>
                 <td>{{ $registro->expediente }}</td>
                 <td>{{ $registro->tiposPagos_id }}</td>
                 <td>${{ $registro->monto }}</td>
@@ -69,17 +72,13 @@
               @endforeach
                     </tbody>
                 </table>
-                <div class="clearfix">
-                    <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                    </ul>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        Mostrando {{ $registros->firstItem() }} - {{ $registros->lastItem() }} de {{ $registros->total() }} registros
+                    </div>
+                    <div>
+                        {{ $registros->links() }}
+                    </div>
                 </div>
             </div>
         </div>

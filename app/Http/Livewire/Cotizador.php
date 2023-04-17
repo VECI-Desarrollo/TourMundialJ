@@ -2,14 +2,15 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\DemoMail;
+use App\Mail\Mail;
 use App\Models\agenciapagadora;
-use App\Models\Despliegues;
-use App\Models\formularios;
+use App\Models\correosadjuntos;
 use App\Models\registrospagosagencias;
 use App\Models\TiposPagos;
 use App\Models\TiposProductos;
 use App\Models\vendedores;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail as FacadesMail;
 use Livewire\WithFileUploads;
 use Livewire\Component;
 
@@ -108,8 +109,7 @@ public function saveInputs()
     {
 
      /////// Consulta para el select vendedores
-     $this->vendedores =
-      vendedores::where('estado', 1)->get();
+     $this->vendedores =vendedores::where('estado', 1)->get();
 
      /////// Consulta para el select tipo de pago
      $this->tipoPago = TiposPagos::where('estado', 1)->orderBy('tipoPago')->get();
@@ -119,6 +119,15 @@ public function saveInputs()
 
 
     }
+
+     ////// metodo que para el areglo de correos
+
+        public function correos()
+        {
+           $correosAdjuntos = correosadjuntos::select('email')->toArray();
+
+        }
+
 
     //=============== [ Metodo para la insercion de los registros ] =================//
 
@@ -177,23 +186,23 @@ $inputs = $this->inputs;
          /// se obtiene el nombre original del archivo  comprobante
         $originalName = $this->comprobante->getClientOriginalName();
 
-    //    $table= registrospagosagencias::create([
-    //         'Usuarios_id' => $this->vendedor,
-    //         'agenciaNombre' => $this->nombreAgenciaPagadora,
-    //         'expediente' => $numerosExpediente,
-    //         'tiposPagos_id' => $this->tipoPagoValor,
-    //         'monto' => $this->monto,
-    //         'comprobante' => $originalName,
-    //         'tiposProductos_id' => $this->productoPagado,
-    //         'fechaDeposito' => $this->fechaDeposito,
-    //         'moneda' => $this->moneda,
-    //         'tipoCambio' => null
-    //     ]);
+       $table= registrospagosagencias::create([
+            'vendedor' => $this->vendedor,
+            'agenciaNombre' => $this->nombreAgenciaPagadora,
+            'expediente' => $numerosExpediente,
+            'tiposPagos_id' => $this->tipoPagoValor,
+            'monto' => $this->monto,
+            'comprobante' => $originalName,
+            'tiposProductos_id' => $this->productoPagado,
+            'fechaDeposito' => $this->fechaDeposito,
+            'moneda' => $this->moneda,
 
-    //     agenciapagadora::updateOrCreate(
-    //         ['nombre' => $this->nombreAgenciaPagadora],
+        ]);
 
-    //     );
+        agenciapagadora::updateOrCreate(
+            ['nombre' => $this->nombreAgenciaPagadora],
+
+        );
 
           $tipoArchivo= substr($originalName, -3);
           if($tipoArchivo == 'pdf'){
@@ -218,11 +227,29 @@ $inputs = $this->inputs;
             ]);
 
 
+
+            $mailData = [
+                'title' => 'Mail from Web-tuts.com',
+                'body' => 'This is for testing email using smtp.'
+            ];
+
+
+            $emails =correosadjuntos::select('email')->get()->toArray();
+
+            FacadesMail::to($emails)->send(new DemoMail($mailData));
+
+
+            $this->dispatchBrowserEvent('successfully', ['message' => "se envio con exito!"]);
+            // dd("Email is sent successfully.");
+
+
+
     }
 
 
     public function render()
     {   self::ConsultasSelects();
+
         return view('livewire.cotizador');
     }
 }

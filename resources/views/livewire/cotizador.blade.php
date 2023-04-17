@@ -41,9 +41,8 @@
                                 <option value="" selected>Seleccionar Vendedor...</option>
                                 <?php
                                 foreach ($vendedores as $row) {
-                                    $valor = $row->id;
-                                    $vendedor = $row->vendedor;
-                                    echo "<option value=" . $valor . ">" . $vendedor . "</option>";
+                                    $vendedor = $row->nombre;
+                                    echo "<option value=" .$vendedor . ">" . $vendedor . "</option>";
                                 }
                                 ?>
                             </select>
@@ -102,9 +101,8 @@
                                 <?php
                                 foreach ($tipoPago as $row)
                                 {
-                                    $valor = $row->id;
                                     $tipoPago = $row->tipoPago;
-                                    echo "<option value=" . $valor . ">" . $tipoPago . "</option>";
+                                    echo "<option value=" .  $tipoPago . ">" . $tipoPago . "</option>";
                                 }
                                 ?>
                             </select>
@@ -117,10 +115,9 @@
                             <select wire:model="productoPagado" class="form-select" id="product" name="product" required>
                                 <option value=""  selected>Seleccionar producto pagado...</option>
                                 <?php
-                                foreach ($tiposProducto as $key => $row) {
-                                    $valor = $row["id"];
-                                    $tipoProducto = $row["tipoProducto"];
-                                    echo "<option value=" . $valor . ">" . $tipoProducto . "</option>";
+                                foreach ($tiposProducto as  $row) {
+                                    $tipoProducto = $row->tipoProducto;
+                                    echo "<option value=" .  $tipoProducto . ">" . $tipoProducto . "</option>";
                                 }
                                 ?>
                             </select>
@@ -207,7 +204,19 @@
 
 
 
+<script>
 
+    window.addEventListener('successfully', event => {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Se guardo ticket con exito',
+            showConfirmButton: false,
+            timer: 3000
+          })
+    });
+
+</script>
 
 
 </div>

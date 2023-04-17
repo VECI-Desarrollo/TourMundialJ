@@ -11,17 +11,16 @@ class registrospagosagencias extends Model
 {
     use HasFactory;
 
-   
-  
+
+
     protected $fillable=[
     'id',
-    'Usuarios_id',
+    'vendedor',
     'agenciaNombre',
     'agenciaContacto',
     'expediente',
     'tiposPagos_id',
     'monto',
-    'fecha',
     'comprobante',
     'tiposProductos_id',
     'moneda',
@@ -34,6 +33,6 @@ class registrospagosagencias extends Model
 
 
 
-  
+
 
 }
