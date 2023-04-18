@@ -6,7 +6,7 @@
     <h1>{{ $mailData['title'] }}</h1>
     <p>{{ $mailData['subTitle'] }}</p>
 
-    <p>Vendedor:  <strong class="text-inverse">{{ $mailData['vendedor'] }}</strong><br></p>
+    <p>Vendedor:  <strong class="text-inverse">{{ $mailData['vendedor'] }} {{ $mailData['apellido'] }}</strong><br></p>
     <p>Agencia Pagadora:  <strong class="text-inverse">{{ $mailData['agencia'] }}</strong><br></p>
     <p>Producto pagado:  <strong class="text-inverse">{{ $mailData['tipoProducto'] }}</strong><br></p>
     <p>Monto:  ${{ $mailData['monto'] }}<br></p>
@@ -16,9 +16,7 @@
 
 
     <div class="invoice-note">
-        * Email generado y enviado por [Tour Mundial App]<br>
-        * Para más detalles, busca el ID de movimiento en TourMundial app.<br>
-        * Se envía copia del email a todos los correos asociados.
+        * Email generado y enviado automaticamente por Tour Mundial.<br>.
      </div>
      <div class="invoice-footer">
         <p class="text-center m-b-5 f-w-600">

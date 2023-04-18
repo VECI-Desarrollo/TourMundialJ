@@ -13,7 +13,7 @@ class TiposDeProducto extends Component
     protected $paginationTheme = 'bootstrap'; //para dar e estilo numerico al paginador
 
     public $search = '';
-    public $perPage = 5;
+    public $perPage = 10;
 
     protected $listeners = ['refreshPanelProductos' => '$refresh'];
 

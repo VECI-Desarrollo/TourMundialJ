@@ -12,7 +12,7 @@ class PanelControl extends Component
 
 
     public $search = '';
-    public $perPage = 3;
+    public $perPage = 30;
 
     protected $listeners = ['refreshPanel' => '$refresh'];
 

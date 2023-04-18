@@ -13,7 +13,7 @@ class TiposDePago extends Component
     protected $paginationTheme = 'bootstrap'; //para dar e estilo numerico al paginador
 
     public $search = '';
-    public $perPage = 3;
+    public $perPage = 10;
 
     protected $listeners = ['refreshPanelPagos' => '$refresh'];
 

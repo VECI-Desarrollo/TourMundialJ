@@ -8,8 +8,7 @@
             <img class="d-block mx-auto mb-4" src="img/logo.png">
             <h2>REGISTRO PAGO AGENCIAS DE VIAJES</h2>
             <p>Adjunte los datos del deposito o pago en WebPay para gestionar su reserva</p>
-            <p>Link de pago con WebPay</p>
-
+            {{--  <p>Link de pago con WebPay</p>  --}}
 
         <div class="row">
             <div class="col-12 text-center">
@@ -17,7 +16,7 @@
                 <button type="button"  class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#CuentasDeposito">
                   Ver cuentas deposito
                 </button>
-                <a href="{{ route('RegistroPagos') }}" class="btn btn-primary">Panel de control</a>
+                {{--  <a href="{{ route('RegistroPagos') }}" class="btn btn-primary">Panel de control</a>  --}}
 
 
           </div>
@@ -38,7 +37,7 @@
                                 <?php
                                 foreach ($vendedores as $row) {
                                     $vendedor = $row->nombre;
-                                    echo "<option value=" .$row->id. ">" . $vendedor . "</option>";
+                                    echo "<option value=" .$row->id. ">" . $vendedor ."&nbsp;" .$row->apellido . "</option>";
                                 }
                                 ?>
                             </select>
@@ -165,7 +164,7 @@
                             <label for="php artisan serve
                             aymentFile" class="form-label">Cargar el comprobante de TRANSBANK o deposito bancario  "Imagen o PDF"(*)</label>
 
-                            <input type="file"  class="form-control" wire:model="comprobante" accept="image/jpeg,image/jpg,image/png,image/webp,application/pdf">
+                            <input type="file" id="comprobante" class="form-control" wire:model="comprobante" accept="image/jpeg,image/jpg,image/png,image/webp,application/pdf">
                             @error('comprobante') <span class="text-red-500">{{ $message }}</span> @enderror
 
                         </div>
@@ -183,7 +182,7 @@
                         -->
                       <br>
                         <div class="col-sm-12">
-                            <button class="w-100 btn btn-tm btn-lg" onclick="sucess()" wire:click="SaveRegistro()">Guardar Ticket</button>
+                            <button class="w-100 btn btn-tm btn-lg" onclick="sucess()" wire:click="SaveRegistro()">Guardar Pago</button>
                         </div>
                         <div wire:loading  wire:target="SaveRegistro" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: white; z-index: 9999;">
                             <img src="img/loading.gif" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
@@ -209,6 +208,7 @@
 <script>
 
     window.addEventListener('successfully', event => {
+        location.reload();
         Swal.fire({
             position: 'top-end',
             icon: 'success',

@@ -47,12 +47,7 @@ class Cotizador extends Component
  ////// Montaje /////////////
 
  public function mount()
- {
-
-
-
- }
-
+ { }
 
  public function seleccionarAgenciaPagadora($nombre)
 {
@@ -69,8 +64,6 @@ class Cotizador extends Component
      }
  }
 
-
-
  ////// para evita espacios en blanco en el numero expediente
  public function updatedNumeroExpediente($value)
 {
@@ -82,8 +75,6 @@ class Cotizador extends Component
         $this->numeroExpediente = '';
     }
 }
-
-
 
 
   //// Metodo para incrementar los inputs
@@ -216,7 +207,6 @@ $inputs = $this->inputs;
 
         ]);
 
-
          ////////// se guarda la agencia si , no exite en la lista
        agenciapagadora::updateOrCreate(
             ['nombre' => $this->nombreAgenciaPagadora],
@@ -225,9 +215,9 @@ $inputs = $this->inputs;
             ///// se define si el archivo el pdf o imagen para guardar en la carpeta correspondiente
           $tipoArchivo= substr($originalName, -3);
           if($tipoArchivo == 'pdf'){
-            $this->comprobante->storeAs('archivos/pdf',$nombreArchivo."-".$originalName,'public2');
+            $this->comprobante->storeAs('archivos/pdf',$nombreArchivo,'public2');
           }else{
-            $this->comprobante->storeAs('archivos/img',$nombreArchivo."-".$originalName ,'public2');
+            $this->comprobante->storeAs('archivos/img',$nombreArchivo,'public2');
           }
 
 
@@ -241,6 +231,7 @@ $inputs = $this->inputs;
                 'title' => 'Registro de pago TourMundial.',
                 'subTitle' => 'Detalles del registro de pago.',
                 'vendedor'=>$nombreVendedor->nombre,
+                'apellido'=> $nombreVendedor->apellido,
                 'agencia'=> $this->nombreAgenciaPagadora,
                 'expediente'=> $numerosExpediente,
                 'tipoPago' => $this->tipoPagoValor,
@@ -267,7 +258,7 @@ $inputs = $this->inputs;
 
             //////// reset todos los campos del formulario
          $this->reset(
-            ['vendedor',
+            [ 'vendedor',
               'nombreAgenciaPagadora',
               'numeroExpediente',
               'inputs',
@@ -276,10 +267,9 @@ $inputs = $this->inputs;
               'productoPagado',
               'fechaDeposito',
               'moneda',
-              'comprobante',
-
             ]);
-            $this->emit('refreshForm');
+
+            $this->comprobante=null;
             $this->dispatchBrowserEvent('successfully', ['message' => "se envio con exito!"]);
             // dd("Email is sent successfully.");
 

@@ -12,7 +12,7 @@ class Vendedores extends Component
     protected $paginationTheme = 'bootstrap'; //para dar e estilo numerico al paginador
 
     public $search = '';
-    public $perPage = 2;
+    public $perPage = 10;
 
     //// variables para edit
     public $vendedorId;

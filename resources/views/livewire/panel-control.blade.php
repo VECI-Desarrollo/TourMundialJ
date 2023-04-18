@@ -63,7 +63,7 @@
                     @endif
                 <td scope="col" class="w-auto">{{ $registro->tiposProductos_id }}</td>
                 <td scope="col" class="w-auto">{{ $registro->moneda }}</td>
-                <td scope="col" class="w-auto">{{ $registro->fechaDeposito }}</td>
+                <td scope="col" class="w-auto">{{ \Carbon\Carbon::parse($registro->fechaDeposito)->format('d/m/Y') }}  </td>
                 <td scope="col" class="w-auto"><small>{{ $registro->id }}</small></td>
                 {{--  <td>  --}}
                     {{--  <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
