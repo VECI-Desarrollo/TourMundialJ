@@ -45,7 +45,7 @@
                  @foreach ($registros as $registro)
               <tr>
                 <td>{{ $registro->tipoProducto }}</td>
-                <td> <a href="#" class="delete"  wire:click="delete('{{$registro->id }}')" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td>
+                <td>    <a href="#" class="delete" onclick="confirm('¿Seguro que quieres eliminar?') || event.stopImmediatePropagation()"   wire:click="delete('{{$registro->id }}')"  title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td>
 
               </tr>
               @endforeach

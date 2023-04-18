@@ -1,18 +1,31 @@
 <html>
 <head>
-    <title>ItsolutionStuff.com</title>
+    <title>Regsitro Ticket Tour Mundial</title>
 </head>
 <body>
-    <h1>hola</h1>
-    <p>mundo</p>
+    <h1>{{ $mailData['title'] }}</h1>
+    <p>{{ $mailData['subTitle'] }}</p>
 
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p>Vendedor:  <strong class="text-inverse">{{ $mailData['vendedor'] }}</strong><br></p>
+    <p>Agencia Pagadora:  <strong class="text-inverse">{{ $mailData['agencia'] }}</strong><br></p>
+    <p>Producto pagado:  <strong class="text-inverse">{{ $mailData['tipoProducto'] }}</strong><br></p>
+    <p>Monto:  ${{ $mailData['monto'] }}<br></p>
+    <p>Fecha de Registro:  {{ $mailData['fechaRegistro'] }}<br></p>
+    <p>Fecha de Deposito:  {{ $mailData['fechaDeposito'] }}<br></p>
+    <p>Id del ticket:  <strong class="text-inverse"> {{ $mailData['id'] }}</strong><br></p>
 
-    <p>Thank you</p>
+
+    <div class="invoice-note">
+        * Email generado y enviado por [Tour Mundial App]<br>
+        * Para más detalles, busca el ID de movimiento en TourMundial app.<br>
+        * Se envía copia del email a todos los correos asociados.
+     </div>
+     <div class="invoice-footer">
+        <p class="text-center m-b-5 f-w-600">
+          TourMundial {{ date("Y") }} &copy; Todos los Derechos Reservados.
+        </p>
+     </div>
+
+
 </body>
 </html>

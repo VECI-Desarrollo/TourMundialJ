@@ -31,7 +31,8 @@ class PanelControl extends Component
                   ->orWhere('monto', 'like', '%' . $this->search . '%')
                   ->orWhere('tiposProductos_id', 'like', '%' . $this->search . '%')
                   ->orWhere('moneda', 'like', '%' . $this->search . '%')
-                  ->orWhere('fechaDeposito', 'like', '%' . $this->search . '%');
+                  ->orWhere('fechaDeposito', 'like', '%' . $this->search . '%')
+                  ->orWhere('id', 'like', '%' . $this->search . '%');
         })
         ->orderBy('created_at', 'desc')
         ->paginate($this->perPage);

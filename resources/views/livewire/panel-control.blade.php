@@ -31,43 +31,45 @@
                    <button type="button"  class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#agregarProductoPagadoModal">
                     Agregar producto
                    </button>  --}}
-                <table class="table table-bordered">
+                <table class="table table-bordered table-auto">
                     <thead>
                         <tr>
-                            <th>Agencia</th>
-                            <th>Vendedor</th>
-                            <th>Expediente</th>
-                            <th>Tipo de Pago</th>
-                            <th>Monto</th>
-                            <th>Archivo</th>
-                            <th>Tipo de Producto</th>
-                            <th>Moneda</th>
-                            <th>Fecha de Depósito</th>
-                            <th>Actions</th>
+                            <th scope="col">Agencia</th>
+                            <th scope="col" class="w-auto">Vendedor</th>
+                            <th scope="col" class="w-auto">Expediente</th>
+                            <th scope="col" class="w-auto"> Tipo de Pago</th>
+                            <th scope="col" class="w-auto">Monto</th>
+                            <th scope="col" class="w-auto">Archivo</th>
+                            <th scope="col" class="w-auto">Tipo de Producto</th>
+                            <th scope="col" class="w-auto">Moneda</th>
+                            <th scope="col" class="w-auto">Fecha de Depósito</th>
+                            <th scope="col" class="w-auto" >Id </th>
+                            {{--  <th>Actions</th>  --}}
                         </tr>
                     </thead>
                     <tbody>
                  @foreach ($registros as $registro)
               <tr>
-                <td>{{ $registro->agenciaNombre }}</td>
-                <td>{{ $registro->vendedor }}</td>
-                <td>{{ $registro->expediente }}</td>
-                <td>{{ $registro->tiposPagos_id }}</td>
-                <td>${{ $registro->monto }}</td>
-                <td>
+                <td scope="col" class="w-auto">{{ $registro->agenciaNombre }}</td>
+                <td scope="col" class="w-auto">{{ $registro->vendedor }}</td>
+                <td scope="col" class="w-auto">{{ $registro->expediente }}</td>
+                <td scope="col" class="w-auto">{{ $registro->tiposPagos_id }}</td>
+                <td scope="col" class="w-auto">${{  number_format($registro->monto,2) }}</td>
+                <td scope="col" class="w-auto">
                     @if(substr( $registro->comprobante, -3)  == 'pdf' )
                     <a href="archivos/pdf/{{ $registro->comprobante }}" target="_blank" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a></td>
                     @else
                     <a href="archivos/img/{{ $registro->comprobante }}" target="_blank" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a></td>
                     @endif
-                <td>{{ $registro->tiposProductos_id }}</td>
-                <td>{{ $registro->moneda }}</td>
-                <td>{{ $registro->fechaDeposito }}</td>
-                <td>
+                <td scope="col" class="w-auto">{{ $registro->tiposProductos_id }}</td>
+                <td scope="col" class="w-auto">{{ $registro->moneda }}</td>
+                <td scope="col" class="w-auto">{{ $registro->fechaDeposito }}</td>
+                <td scope="col" class="w-auto"><small>{{ $registro->id }}</small></td>
+                {{--  <td>  --}}
                     {{--  <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
                     <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
                     <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>  --}}
-                </td>
+                {{--  </td>  --}}
               </tr>
               @endforeach
                     </tbody>

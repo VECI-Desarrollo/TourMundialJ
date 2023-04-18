@@ -49,7 +49,19 @@
         </div>
       </div>
 
+      <script>
 
+        window.addEventListener('successfully', event => {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Se guardo vendedor',
+                showConfirmButton: false,
+                timer: 3000
+              })
+        });
+
+    </script>
 
 
 

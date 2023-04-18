@@ -42,10 +42,13 @@ class Vendedores extends Component
     //// metodo para borrar
 
     public function delete($id){
+
         ModelsVendedores::where('id', $id)->delete();
   // ////// emit para refrescar el panel vendedores  y actualizar datos en tiempo real
     $this->emit('refreshPanelVendedores');
     }
+
+
 
 
     public function render()

@@ -31,10 +31,6 @@
             <div class="col-md-7 col-lg-8">
 
                     <div class="row g-3">
-                       {{--  {{ var_dump( $productoPagado) }}
-                       <div wire:loading>
-                        Processing Payment...
-                    </div>  --}}
                         <div class="col-sm-12">
                             <label for="salesman" class="form-label">Vendedor que maneja el expediente (*)</label>
                             <select wire:model="vendedor" class="form-select" required>
@@ -42,7 +38,7 @@
                                 <?php
                                 foreach ($vendedores as $row) {
                                     $vendedor = $row->nombre;
-                                    echo "<option value=" .$vendedor . ">" . $vendedor . "</option>";
+                                    echo "<option value=" .$row->id. ">" . $vendedor . "</option>";
                                 }
                                 ?>
                             </select>
@@ -72,7 +68,7 @@
                               <input type="text"  class="form-control" id="expedient" wire:model="numeroExpediente" aria-describedby="inputGroupExpedient" maxlength="8" required pattern="[0-9]{8}">
 
                                       @if($numeroExpediente )
-                                       <button class="btn btn-primary" type="button" wire:click.prevent="addInput">Agregar expediente</button>
+                                       <button class="btn btn-primary"  type="button" wire:click.prevent="addInput">Agregar expediente</button>
                                         @else
                                         <button disabled  class="btn btn-primary" type="button" wire:click.prevent="addInput">Agregar expediente</button>
                                         @endif
@@ -96,7 +92,7 @@
 
                         <div class="col-sm-12">
                             <label for="paymentType" class="form-label">Tipo de pago (*)</label>
-                            <select wire:model="tipoPagoValor" class="form-select" id="paymentType" required>
+                            <select wire:model.defer="tipoPagoValor" class="form-select" id="paymentType" required>
                                 <option value=""  selected>Seleccionar tipo de pago...</option>
                                 <?php
                                 foreach ($tipoPago as $row)
@@ -110,14 +106,14 @@
                         </div>
 
                         <div class="col-sm-12">
-                            {{ $productoPagado }}
+                            {{--  {{ $productoPagado }}  --}}
                             <label for="paidProduct" class="form-label">Producto pagado (*)</label>
-                            <select wire:model="productoPagado" class="form-select" id="product" name="product" required>
+                            <select wire:model.defer="productoPagado" class="form-select" required>
                                 <option value=""  selected>Seleccionar producto pagado...</option>
                                 <?php
-                                foreach ($tiposProducto as  $row) {
-                                    $tipoProducto = $row->tipoProducto;
-                                    echo "<option value=" .  $tipoProducto . ">" . $tipoProducto . "</option>";
+                                foreach ($tiposProducto as  $t) {
+                                    $tipoProducto = $t->tipoProducto;
+                                    echo "<option value=\"" .  trim($tipoProducto) . "\">" . $tipoProducto . "</option>";
                                 }
                                 ?>
                             </select>
@@ -143,7 +139,7 @@
 
                         <div class="col-sm-12">
                             <label for="paymentAmount" class="form-label">Monto pagado en <span id="referencePaymentCurrency">{{ $moneda ? $moneda : 'Seleccione moneda'}}</span> (*)</label>
-                            <input wire:model="monto" type="text" class="form-control" id="paymentAmount" name="paymentAmount" placeholder="" value="" required>
+                            <input wire:model.defer="monto" type="text" class="form-control" id="paymentAmount" name="paymentAmount" placeholder="" value="" required>
                             @error('monto') <span class="text-red-500">{{ $message }}</span> @enderror
                         </div>
 
@@ -161,7 +157,7 @@
                         <div class="col-sm-12">
                             <label for="paymentDate" class="form-label">Fecha del deposito o pago con tarjeta de credito (*)</label>
 
-                            <input class="form-control" wire:model="fechaDeposito" type="date" id="date" name="date">
+                            <input class="form-control" wire:model.defer="fechaDeposito" type="date" id="date" name="date">
                             @error('fechaDeposito') <span class="text-red-500">{{ $message }}</span> @enderror
                         </div>
 
@@ -185,10 +181,16 @@
                             </div>
                         </div>
                         -->
-
+                      <br>
                         <div class="col-sm-12">
-                            <button class="w-100 btn btn-tm btn-lg" onclick="sucess()" wire:click="SaveRegistro()">Enviar</button>
+                            <button class="w-100 btn btn-tm btn-lg" onclick="sucess()" wire:click="SaveRegistro()">Guardar Ticket</button>
                         </div>
+                        <div wire:loading  wire:target="SaveRegistro" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: white; z-index: 9999;">
+                            <img src="img/loading.gif" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                          </div>
+
+
+                        <br>
 
 
                         <div id="return-false" class="col-sm-12 text-center text-danger">

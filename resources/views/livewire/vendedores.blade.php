@@ -46,7 +46,8 @@
 
                 <td>
                     <a href="#" class="edit" title="Edit" data-toggle="tooltip"    data-bs-toggle="modal" data-bs-target="#editarVendedor{{ $registro->id }}"  ><i class="material-icons">&#xE254;</i></a>
-                    <a href="#" class="delete"  wire:click="delete('{{$registro->id }}')" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                    <a href="#" class="delete" onclick="confirm('¿Seguro que quieres eliminar?') || event.stopImmediatePropagation()"   wire:click="delete('{{$registro->id }}')"  title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+
                 </td>
               </tr>
               <livewire:modales.edit-vendedor :edit="$registro" :wire:key="$registro->id" />

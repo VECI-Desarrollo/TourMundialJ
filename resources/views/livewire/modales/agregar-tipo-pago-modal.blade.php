@@ -14,7 +14,7 @@
             <label class="sr-only" for="inlineFormInputName2">Especifica tipo de pago</label>
             <input type="text" wire:model="tipoPago" class="form-control mb-2 mr-sm-2" placeholder="Tipo de pago">
 
-            <button  wire:click="save()" type="submit" class="btn btn-primary mb-2">Submit</button>
+            <button  wire:click="save()" type="submit" class="btn btn-primary mb-2">Guardar</button>
           </div>
 
           </div>
@@ -23,6 +23,19 @@
     </div>
 
 
+    <script>
+
+        window.addEventListener('successfully', event => {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Se guardo tipo de pago',
+                showConfirmButton: false,
+                timer: 3000
+              })
+        });
+
+    </script>
 
 
 </div>

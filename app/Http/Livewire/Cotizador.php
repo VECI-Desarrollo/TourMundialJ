@@ -3,13 +3,14 @@
 namespace App\Http\Livewire;
 
 use App\Mail\DemoMail;
-use App\Mail\Mail;
 use App\Models\agenciapagadora;
 use App\Models\correosadjuntos;
 use App\Models\registrospagosagencias;
 use App\Models\TiposPagos;
 use App\Models\TiposProductos;
 use App\Models\vendedores;
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail as FacadesMail;
 use Livewire\WithFileUploads;
 use Livewire\Component;
@@ -31,6 +32,11 @@ class Cotizador extends Component
            $monto,
            $fechaDeposito,
            $comprobante;
+
+ /////////////// listeners
+           protected $listeners = ['refresForm' => '$refresh'];
+
+
   /// para los inputs del array Numero de expediente accept=".jpg,.jpeg,.png,.webp,.pdf"
     public $inputs = [];
 
@@ -186,32 +192,80 @@ $inputs = $this->inputs;
          /// se obtiene el nombre original del archivo  comprobante
         $originalName = $this->comprobante->getClientOriginalName();
 
-       $table= registrospagosagencias::create([
-            'vendedor' => $this->vendedor,
+
+        /////// se saca el nombre del vendeor con su id
+
+        $nombreVendedor = Vendedores::where('id', $this->vendedor)->first();
+
+        ////// se genera id de archivo unico
+
+        $nombreArchivo=uniqid().$originalName;
+
+        // dd( $nombreVendedor->nombre);
+
+        $insertTicket = registrospagosagencias::create([
+            'vendedor' =>  $nombreVendedor->nombre,
             'agenciaNombre' => $this->nombreAgenciaPagadora,
             'expediente' => $numerosExpediente,
             'tiposPagos_id' => $this->tipoPagoValor,
             'monto' => $this->monto,
-            'comprobante' => $originalName,
+            'comprobante' => $nombreArchivo,
             'tiposProductos_id' => $this->productoPagado,
             'fechaDeposito' => $this->fechaDeposito,
             'moneda' => $this->moneda,
 
         ]);
 
-        agenciapagadora::updateOrCreate(
+
+         ////////// se guarda la agencia si , no exite en la lista
+       agenciapagadora::updateOrCreate(
             ['nombre' => $this->nombreAgenciaPagadora],
 
         );
-
+            ///// se define si el archivo el pdf o imagen para guardar en la carpeta correspondiente
           $tipoArchivo= substr($originalName, -3);
           if($tipoArchivo == 'pdf'){
-            $this->comprobante->storeAs('archivos/pdf',uniqid()."-".$originalName,'public2');
+            $this->comprobante->storeAs('archivos/pdf',$nombreArchivo."-".$originalName,'public2');
           }else{
-            $this->comprobante->storeAs('archivos/img',uniqid()."-".$originalName ,'public2');
+            $this->comprobante->storeAs('archivos/img',$nombreArchivo."-".$originalName ,'public2');
           }
 
-//////// reset todos los campos del formulario
+
+
+        //    dd($insertTicket);
+
+        /////================================[Seccion para el envio de emails] ========////
+
+          /// se genera el array  para pasar los valores a la vista de email DemoEmail
+            $mailData = [
+                'title' => 'Registro de pago TourMundial.',
+                'subTitle' => 'Detalles del registro de pago.',
+                'vendedor'=>$nombreVendedor->nombre,
+                'agencia'=> $this->nombreAgenciaPagadora,
+                'expediente'=> $numerosExpediente,
+                'tipoPago' => $this->tipoPagoValor,
+                'monto' => $this->monto,
+                'tipoProducto'=>$this->productoPagado,
+                'fechaRegistro'=> date('Y-m-d'),
+                'fechaDeposito'=>$this->fechaDeposito,
+                'moneda'=> $this->moneda,
+                'id'=> $insertTicket->id,
+
+
+            ];
+
+    //////// se obtienen los email aosciado y el del vendedor en un array
+    $emailsAdjuntos = correosadjuntos::pluck('email');
+    $emailVendedor = Vendedores::where('id', $this->vendedor)->pluck('email');
+    $emails = $emailsAdjuntos->merge($emailVendedor)->toArray();
+
+
+            //  dd($emails);
+
+//    ////// se utliza el metodo para envio ásando el arreglo de
+            FacadesMail::to($emails)->send(new DemoMail($mailData));
+
+            //////// reset todos los campos del formulario
          $this->reset(
             ['vendedor',
               'nombreAgenciaPagadora',
@@ -225,20 +279,7 @@ $inputs = $this->inputs;
               'comprobante',
 
             ]);
-
-
-
-            $mailData = [
-                'title' => 'Mail from Web-tuts.com',
-                'body' => 'This is for testing email using smtp.'
-            ];
-
-
-            $emails =correosadjuntos::select('email')->get()->toArray();
-
-            FacadesMail::to($emails)->send(new DemoMail($mailData));
-
-
+            $this->emit('refreshForm');
             $this->dispatchBrowserEvent('successfully', ['message' => "se envio con exito!"]);
             // dd("Email is sent successfully.");
 

@@ -3,6 +3,7 @@
 use App\Http\Livewire\CorreosAdjuntos;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Cotizador;
+use App\Http\Livewire\Cuentas;
 use App\Http\Livewire\PanelControl;
 use App\Http\Livewire\TiposDePago;
 use App\Http\Livewire\TiposDeProducto;
@@ -29,6 +30,7 @@ Route::get('Vendedores', Vendedores::class)->name('Vendedores');
 Route::get('TiposDePago', TiposDePago::class)->name('TiposPago');
 Route::get('TiposDeProductos', TiposDeProducto ::class)->name('TiposProducto');
 Route::get('CorreosAdjuntos', CorreosAdjuntos::class)->name('CorreosAdjuntos');
+// Route::get('Cuentas', Cuentas::class)->name('Cuentas');
 
 
 Route::middleware([

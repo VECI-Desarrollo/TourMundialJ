@@ -48,6 +48,8 @@ class AgregarVendedorModal extends Component
          $this->emit('refreshPanelVendedores');
         // $this->dispatchBrowserEvent('name-updated');
 
+        $this->dispatchBrowserEvent('successfully', ['message' => "se envio con exito!"]);
+
      }
 
     public function render()

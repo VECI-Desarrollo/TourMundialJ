@@ -13,7 +13,7 @@
             <label class="sr-only" for="inlineFormInputName2">Especifica tipo de producto</label>
             <input type="text" wire:model="tipoProducto" class="form-control mb-2 mr-sm-2" placeholder="Tipo de producto">
 
-            <button  wire:click="save()" type="submit" class="btn btn-primary mb-2">Submit</button>
+            <button  wire:click="save()" type="submit" class="btn btn-primary mb-2">Guardar</button>
 
 
           </div>
@@ -22,6 +22,22 @@
         </div>
       </div>
     </div>
+
+
+
+    <script>
+
+        window.addEventListener('successfully', event => {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Se guardo producto',
+                showConfirmButton: false,
+                timer: 3000
+              })
+        });
+
+    </script>
 
 
 </div>

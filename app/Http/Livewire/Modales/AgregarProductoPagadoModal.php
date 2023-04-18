@@ -29,6 +29,9 @@ class AgregarProductoPagadoModal extends Component
 
       // ////// emit para refrescar el panel tipos de pago  y actualizar datos en tiempo real
   $this->emit('refreshPanelProductos');
+
+  /// activa el sweet alert
+            $this->dispatchBrowserEvent('successfully', ['message' => "se envio con exito!"]);
     }
 
     public function render()
