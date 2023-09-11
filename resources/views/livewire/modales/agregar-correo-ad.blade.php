@@ -13,7 +13,7 @@
             <label class="sr-only" for="inlineFormInputName2">Especifica tipo de producto</label>
             <input type="text" wire:model="email" class="form-control mb-2 mr-sm-2" placeholder="Nuevo correo">
 
-            <button  wire:click="save()" type="submit" class="btn btn-primary mb-2">Guadar</button>
+            <button  wire:click="save()" type="submit" class="btn btn-primary mb-2">Guardar</button>
           </div>
 
           </div>

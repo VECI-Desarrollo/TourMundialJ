@@ -16,6 +16,7 @@ class TiposDePago extends Component
     public $perPage = 10;
 
     protected $listeners = ['refreshPanelPagos' => '$refresh'];
+    
 
     public function updatingSearch()
     {
@@ -37,6 +38,7 @@ class TiposDePago extends Component
         $registros = tipospagos::where(function($query) {
             $query->where('tipoPago', 'like', '%' . $this->search . '%');
         })
+        ->where('pais_id', auth()->user()->pais_id)
         ->orderBy('created_at', 'desc')
         ->paginate($this->perPage);
 

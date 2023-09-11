@@ -30,14 +30,14 @@ class DemoMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Demo Mail',
+            subject: 'Nuevo Registro',
         );
     }
 
 
     public function build()
     {
-        return $this->subject('Mail from Web-tuts.com')
+        return $this->subject('Mail de registropagos.tourmundial.cl')
                     ->view('emails.demoMail');
     }
 

@@ -2,29 +2,24 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Pais;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Illuminate\Support\Facades\Session;
 class NavigationBar extends Component
 {
-    public $activeTab = 'RegistroPagos';
+     public $pais;
 
-    public function setActiveTab($tab)
+    //// seleccion de pais 
+    public function pais()
     {
-        $this->activeTab = $tab;
-    }
+      $this->pais= Pais::where('id', auth()->user()->pais_id)->first(); 
 
-    public function updated($activeTab)
-    {
-        $this->activeTab = $activeTab;
-    }
-
-    public function mount()
-    {
-        $this->activeTab = 'RegistroPagos'; // Resetear el valor de $activeTab
     }
 
     public function render()
     {
+        self::pais();
         return view('livewire.navigation-bar');
     }
 }

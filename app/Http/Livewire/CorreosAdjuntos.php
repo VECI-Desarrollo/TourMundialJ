@@ -34,6 +34,7 @@ class CorreosAdjuntos extends Component
         $registros = ModelsCorreosadjuntos::where(function($query) {
             $query->where('email', 'like', '%' . $this->search . '%');
         })
+        ->where('pais_id', auth()->user()->pais_id)
         ->orderBy('created_at', 'desc')
         ->paginate($this->perPage);
 

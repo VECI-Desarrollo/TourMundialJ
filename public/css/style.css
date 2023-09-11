@@ -175,3 +175,170 @@
             height: 100%;
             background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco con opacidad del 50% */
           }
+
+/*  seccion contry Box temporal para pruebas de pais   */     
+
+
+/*###################### seccion spiner ######################*/
+
+.lds-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 35px;
+  }
+  
+  .lds-ellipsis div {
+    position: absolute;
+    top: 33px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #312c2c;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+  
+  .lds-ellipsis div:nth-child(1) {
+    left: 8px;
+    background: gray; /* Cambia el color a naranja */
+    animation: lds-ellipsis1 0.6s infinite;
+  }
+  
+  .lds-ellipsis div:nth-child(2) {
+    left: 8px;
+    background: gray; /* Cambia el color a rosa mexicano */
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  
+  .lds-ellipsis div:nth-child(3) {
+    left: 32px;
+    background: gray; /* Cambia el color a amarillo */
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  
+  .lds-ellipsis div:nth-child(4) {
+    left: 56px;
+    background: gray; /* Restaura el color blanco para el cuarto punto */
+    animation: lds-ellipsis3 0.6s infinite;
+  }
+  
+  @keyframes lds-ellipsis1 {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes lds-ellipsis3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+  
+  @keyframes lds-ellipsis2 {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(24px, 0);
+    }
+  }
+
+
+  /* ###############[ seccion de parpadeo]#######################*/
+
+  .parpadea {
+    animation-name: parpadeo;
+    animation-duration: 4s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    -webkit-animation-name: parpadeo;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+}
+
+@-moz-keyframes parpadeo {
+    0% {
+        opacity: 1.0;
+    }
+
+    50% {
+        opacity: 0.0;
+    }
+
+    100% {
+        opacity: 1.0;
+    }
+}
+
+@-webkit-keyframes parpadeo {
+    0% {
+        opacity: 1.0;
+    }
+
+    50% {
+        opacity: 0.0;
+    }
+
+    100% {
+        opacity: 1.0;
+    }
+}
+
+@keyframes parpadeo {
+    0% {
+        opacity: 1.0;
+    }
+
+    50% {
+        opacity: 0.0;
+    }
+
+    100% {
+        opacity: 1.0;
+    }
+}
+
+/*###################[ custom switch 3 toggle]#################### */
+
+.custom-switch {
+    display: inline-flex;
+   /* border: 1px solid #ccc;*/
+   /* border-radius: 20px;*/
+    overflow: hidden;
+    height: 25px;
+    /*background-color: rgba(219, 201, 201, 0.237);*/
+}
+
+.custom-switch input[type="radio"] {
+    display: none;
+}
+
+.custom-switch label {
+    padding: 5px 15px;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.custom-switch input[type="radio"]:checked + label[for^="rechazado"] {
+   /* background-color: red; /* Cambiar el color a rojo para la opción R */
+    color: #ff5b5c; /* Cambiar el color del texto a blanco */
+}
+
+.custom-switch input[type="radio"]:checked + label[for^="curso"] {
+    /*background-color: yellow; /* Cambiar el color a amarillo para la opción E */
+    color: #fdac41;; /* Cambiar el color del texto a negro */
+}
+
+.custom-switch input[type="radio"]:checked + label[for^="aceptado"] {
+   /* background-color: green; /* Cambiar el color a verde para la opción A */
+    color: #10b981; /* Cambiar el color del texto a blanco */
+}

@@ -13,7 +13,16 @@
             @error('tipoPago') <span class="text-red-500">{{ $message }}</span> @enderror
             <label class="sr-only" for="inlineFormInputName2">Especifica tipo de pago</label>
             <input type="text" wire:model="tipoPago" class="form-control mb-2 mr-sm-2" placeholder="Tipo de pago">
+            @error('moneda') <span class="text-red-500">{{ $message }}</span> @enderror
+            <select wire:model.defer="moneda" class="form-select" id="money" required>
+                <option value=""  selected>Seleccionar moneda asociada...</option>
 
+            @foreach($monedas as $moneda)
+            <option value= "{{ $moneda->moneda }}"> {{ $moneda->moneda  }} </option>
+            @endforeach
+
+        </select>
+        <br>
             <button  wire:click="save()" type="submit" class="btn btn-primary mb-2">Guardar</button>
           </div>
 

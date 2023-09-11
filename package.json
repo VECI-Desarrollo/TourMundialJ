@@ -17,6 +17,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "css-toggle-switch": "^4.1.0",
         "jquery": "^3.6.4",
         "sweet-modal": "^1.3.2",
         "sweetalert2": "^11.4.8"

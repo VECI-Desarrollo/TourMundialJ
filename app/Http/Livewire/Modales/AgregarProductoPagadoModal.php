@@ -23,7 +23,7 @@ class AgregarProductoPagadoModal extends Component
        ////// se guarda  el tipo pago en la BD
 
        tiposproductos::updateOrCreate(
-          ['tipoProducto' => $this->tipoProducto],
+          ['tipoProducto' => $this->tipoProducto , 'pais_id' =>auth()->user()->pais_id],
 
       );
 

@@ -1,4 +1,4 @@
-<div>
+<div style="margin-top:70px;">
 
     <div class="container-xl">
         <div class="table-responsive">
@@ -23,12 +23,13 @@
                 <button type="button"  class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#agregarTipoPagoModal">
                     Agregar Tipo de pago
                    </button>
-                   @livewire('navigation-bar')
+
 
                 <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Tipo de pago</th>
+                            <th>Moneda Asociada</th>
                             <th>Acciones</th>
 
                         </tr>
@@ -37,6 +38,7 @@
                  @foreach ($registros as $registro)
               <tr>
                 <td>{{ $registro->tipoPago }}</td>
+                <td>{{ $registro->moneda }}</td>
                 <td>    <a href="#" class="delete" onclick="confirm('¿Seguro que quieres eliminar?') || event.stopImmediatePropagation()"   wire:click="delete('{{$registro->id }}')"  title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a> </td>
               </tr>
               @endforeach

@@ -24,7 +24,7 @@ class AgregarCorreoAd extends Component
        ////// se guarda  el tipo pago en la BD
 
        correosadjuntos::updateOrCreate(
-          ['email' => $this->email],
+          ['email' => $this->email , 'pais_id' => auth()->user()->pais_id],
 
       );
 

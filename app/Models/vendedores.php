@@ -15,6 +15,7 @@ class vendedores extends Model
         'nombre',
         'apellido',
         'email',
-        'estado'
+        'estado',
+        'pais_id',
     ];
 }

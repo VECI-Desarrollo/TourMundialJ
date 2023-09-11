@@ -6,6 +6,7 @@ use App\Models\vendedores as ModelsVendedores;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+
 class Vendedores extends Component
 {
     use WithPagination;
@@ -19,9 +20,20 @@ class Vendedores extends Component
     public $nombre;
     public $apellido;
     public $email;
+    public $vendedor;
+
 
 
     protected $listeners = ['refreshPanelVendedores' => '$refresh'];
+
+    public function mount()
+    {
+
+   // si no esta definido admin u otro con permisos se pasa el id del vendedor por defecto
+   $this->vendedor =  (auth()->user()->rol == "admin" ) ? 0 : auth()->user()->id;
+   
+    }       
+
    ///// metodo editar vendedor
     public function edit($id)
 {
@@ -59,6 +71,7 @@ class Vendedores extends Component
                   ->orWhere('apellido', 'like', '%' . $this->search . '%')
                   ->orWhere('email', 'like', '%' . $this->search . '%');
         })
+         ->where('pais_id', auth()->user()->pais_id)
         ->orderBy('created_at', 'desc')
         ->paginate($this->perPage);
 

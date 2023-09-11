@@ -1,4 +1,4 @@
-<div>
+<div style="margin-top:70px;">
 
     <div class="container-xl">
         <div class="table-responsive">
@@ -23,7 +23,7 @@
                 <button type="button"  class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#agregarCorreoAdjuntoModal">
                     Agregar correo
                    </button>
-                   @livewire('navigation-bar')
+
                 {{--  <button type="button"  class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#agregarVendedor">
                     Agregar Vendedor
                    </button>
@@ -62,6 +62,7 @@
             </div>
         </div>
     </div>
+    
 <livewire:modales.agregar-correo-ad/>
 
 </div>

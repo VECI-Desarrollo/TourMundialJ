@@ -1,4 +1,15 @@
+@php
+use App\Models\roles;
+use App\Models\pais;
+
+$roles = roles::all();
+$paises = pais::all();
+@endphp
+
 <x-guest-layout>
+
+
+
     <x-authentication-card>
         <x-slot name="logo">
             <x-authentication-card-logo />
@@ -14,9 +25,35 @@
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             </div>
 
+            <div>
+                <x-label for="yankee" value="{{ __('Yankee') }}" />
+                <x-input id="yankee" class="block mt-1 w-full" type="text" name="yankee" :value="old('yankee')" required autofocus autocomplete="yankee" />
+            </div>
+
+            <div>
+                <x-label for="name" value="{{ __('Rol') }}" />
+               <select  name="rol" :value="old('rol')" class="block mt-1 w-full" >
+                <option selected>--Selecciona Rol-- </option>
+               @foreach ($roles as $rol)
+               <option value= {{ $rol->rol }}> {{ $rol->rol }} </option>
+               @endforeach
+               </select>
+            </div>
+
             <div class="mt-4">
                 <x-label for="email" value="{{ __('Email') }}" />
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            </div>
+
+            
+            <div class="mt-4">
+                <x-label for="pais" value="{{ __('Pais') }}" />
+               <select  name="pais" :value="old('Pais')" class="block mt-1 w-full" >
+                <option selected>--Selecciona pais-- </option>
+               @foreach ($paises as $pais)
+               <option value= {{ $pais->id }}> {{ $pais->nombre }} </option>
+               @endforeach
+               </select>
             </div>
 
             <div class="mt-4">

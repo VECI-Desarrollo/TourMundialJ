@@ -2,18 +2,26 @@
 
 namespace App\Http\Livewire;
 
+use \Anhskohbo\NoCaptcha\NoCaptcha;
+
 use App\Mail\DemoMail;
 use App\Models\agenciapagadora;
+use App\Models\agenteviajes;
+use App\Models\bancos;
 use App\Models\correosadjuntos;
 use App\Models\registrospagosagencias;
-use App\Models\TiposPagos;
-use App\Models\TiposProductos;
+use App\Models\tipospagos;
+use App\Models\tiposproductos;
 use App\Models\vendedores;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail as FacadesMail;
 use Livewire\WithFileUploads;
 use Livewire\Component;
+
+use Illuminate\Support\Facades\Validator;
+
+
 
 class Cotizador extends Component
 {
@@ -27,11 +35,22 @@ class Cotizador extends Component
            $tipoPago,
            $tipoPagoValor,
            $tiposProducto,
+           $listaBancos,
            $productoPagado,
            $moneda,
            $monto,
+           $banco,
            $fechaDeposito,
-           $comprobante;
+           $comprobante,
+           $nombreAgenteViajes,
+           $agentesDeViajes,
+           $MonedaMontoPagado,
+           $bancoActive,
+           $comentario_general;
+
+       public $recaptcha,$h;
+       public $captcha;
+       public $switchCountry ;
 
  /////////////// listeners
            protected $listeners = ['refresForm' => '$refresh'];
@@ -44,10 +63,25 @@ class Cotizador extends Component
  public $agenciasPagadoras = [];
 
 
+ protected $rules = [
+    'captcha' => 'required|captcha',
+];
+
+
  ////// Montaje /////////////
 
  public function mount()
- { }
+ {
+$this->bancoActive=false;
+$this->switchCountry = 152;
+ }
+
+ //// switch pais 
+ public function switchCountry($idCountry)
+ {
+    $this->switchCountry = ($idCountry === 'cl') ? 152 : 484;
+
+ }
 
  public function seleccionarAgenciaPagadora($nombre)
 {
@@ -55,12 +89,36 @@ class Cotizador extends Component
     $this->agenciasPagadoras = [];
 }
 
+/////// selecionar agente de viajes de la db
+
+public function seleccionarAgentesDeViajes($nombre)
+{
+
+
+    $this->nombreAgenteViajes = $nombre;
+    $this->agentesDeViajes = [];
+}
+
+
+/////// Insertar el nombre de la agencia de viajes para recordarlo en BD ////////
  public function updatedNombreAgenciaPagadora($value)
  {
      if (strlen($value) >= 3) {
-         $this->agenciasPagadoras = agenciapagadora::where('nombre', 'LIKE', '%'.$value.'%')->get();
+         $this->agenciasPagadoras = agenciapagadora::where('nombre', 'LIKE', '%'.$value.'%')->where('pais_id', $this->switchCountry)->get();
      } else {
          $this->agenciasPagadoras = [];
+     }
+ }
+
+
+ ///////// Insertar el nombre del agente de viajes para recordarlo en la BD /////////
+
+ public function updatedNombreAgenteViajes($value)
+ {
+     if (strlen($value) >= 3) {
+         $this->agentesDeViajes = agenteviajes::where('nombre', 'LIKE', '%'.$value.'%')->where('pais_id', $this->switchCountry)->get();
+     } else {
+         $this->agentesDeViajes = [];
      }
  }
 
@@ -106,13 +164,16 @@ public function saveInputs()
     {
 
      /////// Consulta para el select vendedores
-     $this->vendedores =vendedores::where('estado', 1)->get();
+     $this->vendedores =vendedores::where('estado', 1)->where('pais_id', $this->switchCountry)->get();
 
      /////// Consulta para el select tipo de pago
-     $this->tipoPago = TiposPagos::where('estado', 1)->orderBy('tipoPago')->get();
+     $this->tipoPago = tipospagos::where('estado', 1)->where('pais_id', $this->switchCountry)->orderBy('tipoPago')->get();
 
      ////// Consulta para el select tipos de productos
-     $this->tiposProducto =TiposProductos::where('estado', 1)->orderBy('tipoProducto')->get();
+     $this->tiposProducto =tiposproductos::where('estado', 1)->where('pais_id', $this->switchCountry)->orderBy('tipoProducto')->get();
+
+     //////Consulta select para el listado de bancos
+     $this->listaBancos =bancos::where('pais_id', $this->switchCountry)->get();
 
 
     }
@@ -121,7 +182,7 @@ public function saveInputs()
 
         public function correos()
         {
-           $correosAdjuntos = correosadjuntos::select('email')->toArray();
+           $correosAdjuntos = correosadjuntos::select('email')->where('pais_id', $this->switchCountry)->toArray();
 
         }
 
@@ -130,16 +191,25 @@ public function saveInputs()
 
     public function SaveRegistro(){
 
+ $captcha = new \Anhskohbo\NoCaptcha\NoCaptcha(env('NOCAPTCHA_SECRET'), env('NOCAPTCHA_SITEKEY'));
+
+ //dd($this->recaptcha);
+
+
 $inputs = $this->inputs;
+
         $this->validate([
             'comprobante' => 'required|mimes:jpg,jpeg,png,webp,pdf|max:5120',
             'vendedor' => 'required',
             'nombreAgenciaPagadora' => 'required',
             'tipoPagoValor'=> 'required',
             'productoPagado'=> 'required',
-            'moneda'=> 'required',
+          
+
+            // 'moneda'=> 'required',
             'monto' => 'required',
             'fechaDeposito' => 'required',
+            'nombreAgenteViajes'=> 'required',
             'numeroExpediente'=> [
                 function ($attribute, $value, $fail) use ($inputs) {
                     if (empty($inputs)) {
@@ -165,13 +235,24 @@ $inputs = $this->inputs;
             //========== productoPagado
             'productoPagado' => 'El Producto pagado es obligatorio.',
             //========== moneda
-            'moneda' => 'Seleccione moneda de pago es obligatorio.',
+            // 'moneda' => 'Seleccione moneda de pago es obligatorio.',
             //========== monto
             'monto' => 'Ingrese el monto pagado es obligatorio ',
             //========== fechaDeposito
             'fechaDeposito' => 'La fecha del deposito o pago con tarjeta de credito es obligatoria.',
+            //=========== nombreAgenteViajes
+            'nombreAgenteViajes' => 'El nombre del agente es obligatorio',
+                //=========== recaptcha
+
+
 
         ]);
+
+//               if (!$this->recaptcha) {
+//     //$this->h = "Respuesta válida";
+//     return $this->h = "El captcha es necesario";
+// }
+
 
        ///// se combinan los inputs del array con el contenido del numero de expediente si existe
        if($this->numeroExpediente):
@@ -194,16 +275,28 @@ $inputs = $this->inputs;
 
         // dd( $nombreVendedor->nombre);
 
+        //// selecionar el tipo e moneda en  base al tipo de pago
+
+        $moneda = tipospagos::Where('tipoPago', $this->tipoPagoValor)->first();
+
+        // dd( $moneda->moneda);
+
+
+
         $insertTicket = registrospagosagencias::create([
-            'vendedor' =>  $nombreVendedor->nombre,
+            'vendedor' => $nombreVendedor->nombre . ' ' . $nombreVendedor->apellido,
+            'id_vendedor' => $nombreVendedor->id,
             'agenciaNombre' => $this->nombreAgenciaPagadora,
+            'agenteViajes'=> $this->nombreAgenteViajes,
             'expediente' => $numerosExpediente,
             'tiposPagos_id' => $this->tipoPagoValor,
             'monto' => $this->monto,
             'comprobante' => $nombreArchivo,
             'tiposProductos_id' => $this->productoPagado,
             'fechaDeposito' => $this->fechaDeposito,
-            'moneda' => $this->moneda,
+            'moneda' => $moneda->moneda,
+            'banco' => $this->banco,
+            'comentario_general' => $this->comentario_general,
 
         ]);
 
@@ -212,6 +305,12 @@ $inputs = $this->inputs;
             ['nombre' => $this->nombreAgenciaPagadora],
 
         );
+
+        ////////// se guarda el nombre del agente de viaje si , no exite en la lista
+       agenteviajes::updateOrCreate(
+        ['nombre' => $this->nombreAgenteViajes],
+
+    );
             ///// se define si el archivo el pdf o imagen para guardar en la carpeta correspondiente
           $tipoArchivo= substr($originalName, -3);
           if($tipoArchivo == 'pdf'){
@@ -233,6 +332,7 @@ $inputs = $this->inputs;
                 'vendedor'=>$nombreVendedor->nombre,
                 'apellido'=> $nombreVendedor->apellido,
                 'agencia'=> $this->nombreAgenciaPagadora,
+                'agenteViajes'=> $this->nombreAgenteViajes,
                 'expediente'=> $numerosExpediente,
                 'tipoPago' => $this->tipoPagoValor,
                 'monto' => $this->monto,
@@ -240,6 +340,7 @@ $inputs = $this->inputs;
                 'fechaRegistro'=> date('Y-m-d'),
                 'fechaDeposito'=>$this->fechaDeposito,
                 'moneda'=> $this->moneda,
+                'archivo' => $nombreArchivo,
                 'id'=> $insertTicket->id,
 
 
@@ -281,6 +382,16 @@ $inputs = $this->inputs;
     public function render()
     {   self::ConsultasSelects();
 
-        return view('livewire.cotizador');
+
+
+        $m= tipospagos::Where('tipoPago', $this->tipoPagoValor)->where('pais_id', $this->switchCountry)->first();
+
+        if($m){
+
+        $this->MonedaMontoPagado = $m->moneda;
+        }
+
+
+        return view('livewire.cotizador')->layout('layouts.guest');
     }
 }

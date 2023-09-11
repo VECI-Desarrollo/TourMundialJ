@@ -15,9 +15,14 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
-            <div>
+            {{--  <div>
                 <x-label for="email" value="{{ __('Email') }}" />
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            </div>  --}}
+
+            <div>
+                <x-label for="yankee" value="{{ __('Yankee') }}" />
+                <x-input id="yankee" class="block mt-1 w-full" type="text" name="yankee" :value="old('yankee')" required autofocus autocomplete="yankee" />
             </div>
 
             <div class="mt-4">
@@ -28,14 +33,14 @@
             <div class="block mt-4">
                 <label for="remember_me" class="flex items-center">
                     <x-checkbox id="remember_me" name="remember" />
-                    <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
+                    <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Recuerdame') }}</span>
                 </label>
             </div>
 
             <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
                     <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
+                        {{ __('Olvidaste tu contraseña?') }}
                     </a>
                 @endif
 

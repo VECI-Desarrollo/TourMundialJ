@@ -22,6 +22,14 @@
             <label class="sr-only" for="inlineFormInputName2">Apellido</label> @error('apellido') <span class="text-red-500">{{ $message }}</span> @enderror
             <input type="text" wire:model.defer="apellido" class="form-control mb-2 mr-sm-2" placeholder="Ingresa Apellido">
 
+             {{-- ----------------------- Yankee- --}}
+             <label class="sr-only" for="inlineFormInputName2">Apellido</label> @error('yankee') <span class="text-red-500">{{ $message }}</span> @enderror
+             <input type="text" wire:model.defer="yankee" class="form-control mb-2 mr-sm-2" placeholder="Ingresa yankee">
+
+              {{-- ----------------------- password- --}}
+              <label class="sr-only" for="inlineFormInputName2">Apellido</label> @error('password') <span class="text-red-500">{{ $message }}</span> @enderror
+              <input type="text" wire:model.defer="password" class="form-control mb-2 mr-sm-2" placeholder="Ingresa password"> 
+
              {{-- ------------------------Email --}}
             <label class="sr-only" for="inlineFormInputGroupUsername2">E-mail</label>
             @error('email') <span class="text-red-500">{{ $message }}</span> @enderror
